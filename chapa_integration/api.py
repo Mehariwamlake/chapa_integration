@@ -9,18 +9,29 @@ from .utils import (
     get_headers,
 )
 
+@frappe.whitelist(allow_guest=True)
+def test_payment():
 
+    return frappe.call(
+        "chapa_integration.api.initialize_payment",
+        amount=10,
+        email="test@test.com",
+        full_name="Test User",
+        reference_doctype="Test",
+        reference_name="TEST-001",
+    )
+    
 @frappe.whitelist(allow_guest=True)
 def initialize_payment(
-    amount,
-    email,
-    full_name=None,
-    phone_number=None,
-    currency="ETB",
-    reference_doctype=None,
-    reference_name=None,
-    callback_method=None,
-    metadata=None,
+    amount: float,
+    email: str,
+    full_name: str | None = None,
+    phone_number: str | None = None,
+    currency: str = "ETB",
+    reference_doctype: str | None = None,
+    reference_name: str | None = None,
+    callback_method: str | None = None,
+    metadata: dict | None = None,
 ):
 
     tx_ref = frappe.generate_hash(length=20)

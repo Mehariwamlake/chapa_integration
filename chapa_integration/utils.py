@@ -1,6 +1,5 @@
 import frappe
-from .config import SANDBOX_URL, PRODUCTION_URL
-
+from .constants import SANDBOX_URL, PRODUCTION_URL
 
 def get_settings():
     return frappe.get_single("Chapa Settings")
