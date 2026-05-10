@@ -15,8 +15,8 @@ def test_payment():
     return frappe.call(
         "chapa_integration.api.initialize_payment",
         amount=10,
-        email="test@test.com",
-        full_name="Test User",
+        email="mehariwamlake@gmail.com",
+        full_name="mehariw amlake",
         reference_doctype="Test",
         reference_name="TEST-001",
     )
@@ -69,7 +69,18 @@ def initialize_payment(
     frappe.logger().info(data)
 
     if data.get("status") != "success":
-        frappe.throw(data.get("message"))
+
+        error_message = data.get("message")
+
+        if isinstance(error_message, dict):
+            error_message = json.dumps(
+                error_message,
+                indent=2
+            )
+
+        frappe.throw(
+            error_message or "Chapa initialization failed"
+        )
 
     checkout_url = data["data"]["checkout_url"]
 
@@ -101,7 +112,7 @@ def initialize_payment(
 @frappe.whitelist(allow_guest=True)
 def verify_payment():
 
-    tx_ref = frappe.form_dict.get("trx_ref")
+    tx_ref = frappe.form_dict.get("tx_ref")
 
     if not tx_ref:
         return "Missing transaction reference"
