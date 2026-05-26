@@ -4,11 +4,11 @@ authors = [
     { name = "mehariwamlake", email = "mehariwamlake@gmail.com"}
 ]
 description = "connect chapa to frappe"
-requires-python = ">=3.14"
+requires-python = ">=3.11"
 readme = "README.md"
 dynamic = ["version"]
 dependencies = [
-    # "frappe~=16.0.0" # Installed and managed by bench.
+    # "frappe~=15.0.0" # Installed and managed by bench.
 ]
 
 [build-system]
